@@ -2,6 +2,11 @@
   <div id="app">
     <navbar></navbar>
     <router-view :profile="profile" :albums="albums"></router-view>
+    <div v-if="!ready" class="">
+      <center>
+        <img src="/static/loading.gif" alt="" width="400px"/>
+      </center>
+    </div>
   </div>
 </template>
 
