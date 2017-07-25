@@ -13,7 +13,7 @@
 <script>
 import Navbar from '@/components/Navbar'
 /* global FB */
-
+import _ from 'lodash';
 export default {
   name: 'app',
   components: {'navbar': Navbar},
@@ -29,7 +29,7 @@ export default {
     getAlbums(){
       let vm = this;
       FB.api('me/albums?fields=picture{url},name,count',  function(resp) {
-        vm.albums = resp.data;
+        vm.albums = _.orderBy(resp.data, 'name', 'asc');
       });
     },
     getProfile () {
