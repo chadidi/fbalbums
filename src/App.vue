@@ -52,7 +52,7 @@ export default {
       let vm = this
       FB.login(function (response) {
         vm.statusChangeCallback(response)
-      }, {scope: 'publish_actions'})
+      }, {scope: 'user_photos'})
     },
     logout () {
       let vm = this

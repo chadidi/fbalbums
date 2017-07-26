@@ -6,8 +6,8 @@
           <img :src="$parent.profilePicture" alt="profile" class="profile-picture"/>
           <h1 class="page-header">{{$parent.msg(album.name)}}</h1>
         </div>
-        <div class="col-xs-6 thumb" v-for="photo in paginate(photos)">
-          <a class="thumbnail" href="#">
+        <div class="col-sm-4 col-xs-6 thumb" v-for="(photo, index) in paginate(photos)" @click.prevent="check(index)">
+          <a class="thumbnail" :class="{active: photo.checked}">
             <img class="img-responsive" :src="photo.picture" alt="">
           </a>
         </div>
@@ -26,8 +26,8 @@
   </div>
 </template>
 
-
 <script>
+import Vue from 'vue'
 export default {
   name: 'Photos',
   props: ['profile'],
@@ -37,7 +37,7 @@ export default {
       photos: [],
       album: [],
       pagination: {
-        per_page: 4,
+        per_page: 6,
         current_page: 1,
         total: 0
       },
@@ -48,6 +48,11 @@ export default {
     this.getAlbumPhotos()
   },
   methods: {
+    check(index) {
+      let photo = this.photos[index];
+      photo.checked = !photo.checked
+      Vue.set(this.photos, index, photo);
+    },
     getAlbum(){
       let vm = this;
       FB.api("/"+vm.id,function(response){
