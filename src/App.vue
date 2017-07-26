@@ -13,7 +13,7 @@
 <script>
 import Navbar from '@/components/Navbar'
 /* global FB */
-import _ from 'lodash';
+
 export default {
   name: 'app',
   components: {'navbar': Navbar},
@@ -25,7 +25,17 @@ export default {
       authorized: false
     }
   },
+  computed: {
+    profilePicture () {
+      return (this.profile.id)
+        ? 'https://graph.facebook.com/' + this.profile.id + '/picture?width=300'
+        : '/static/default-avatar.png'
+    }
+  },
   methods: {
+    msg (name) {
+      return name+' Album'
+    },
     getAlbums(){
       let vm = this;
       FB.api('me/albums?fields=picture{url},name,count',  function(resp) {
@@ -59,6 +69,8 @@ export default {
         vm.authorized = true
         vm.getProfile()
         vm.getAlbums()
+      } else if (response.status === 'not_authorized') {
+        vm.authorized = false
       } else {
         vm.authorized = false
       }
