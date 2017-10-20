@@ -6,7 +6,7 @@
           <img :src="$parent.profilePicture" alt="profile" class="profile-picture"/>
           <h1 class="page-header">{{$parent.msg(album.name)}}</h1>
         </div>
-        <div class="col-sm-4 col-xs-6 thumb" v-for="(photo, index) in paginate(photos)" @click.prevent="check(index)">
+        <div class="col-sm-4 col-xs-6 thumb" v-for="(photo, index) in paginate(photos)" @click.prevent="check(photo)">
           <a class="thumbnail" :class="{active: photo.checked}">
             <img class="img-responsive" :src="photo.picture" alt="">
           </a>
@@ -48,10 +48,8 @@ export default {
     this.getAlbumPhotos()
   },
   methods: {
-    check(index) {
-      let photo = this.photos[index];
-      photo.checked = !photo.checked
-      Vue.set(this.photos, index, photo);
+    check(photo) {
+      this.$set(photo, 'checked', !photo.checked)
     },
     getAlbum(){
       let vm = this;
